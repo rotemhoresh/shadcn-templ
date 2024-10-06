@@ -1,4 +1,4 @@
-package components
+package shadcntempl
 
 import _ "embed"
 
