@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
-	"github.com/rotemhoresh/components/icons"
+	"github.com/rotemhoresh/shadcn-templ/icons"
 )
 
 const (
@@ -47,15 +47,15 @@ func (v AlertVariant) Class() string {
 func (v AlertVariant) Icon() templ.Component {
 	switch v {
 	case AlertVariantDestructive:
-		return icons.CircleXIcon("size-4", templ.Attributes{})
+		return icons.CircleX("size-4", templ.Attributes{})
 	case AlertVariantSuccess:
-		return icons.CircleCheckIcon("size-4", templ.Attributes{})
+		return icons.CircleCheck("size-4", templ.Attributes{})
 	case AlertVariantWarning:
-		return icons.CircleCheckIcon("size-4", templ.Attributes{})
+		return icons.CircleCheck("size-4", templ.Attributes{})
 	case AlertVariantInfo:
-		return icons.CircleCheckIcon("size-4", templ.Attributes{})
+		return icons.CircleCheck("size-4", templ.Attributes{})
 	default:
-		return icons.CircleCheckIcon("size-4", templ.Attributes{})
+		return icons.CircleCheck("size-4", templ.Attributes{})
 	}
 }
 

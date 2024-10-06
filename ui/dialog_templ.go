@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
-	"github.com/rotemhoresh/components/icons"
+	"github.com/rotemhoresh/shadcn-templ/icons"
 )
 
 const (
