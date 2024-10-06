@@ -1,0 +1,44 @@
+package ui
+
+import "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+
+const (
+	separatorBaseClass = "shrink-0 bg-border"
+)
+
+type SeparatorOrientation int
+
+func (o SeparatorOrientation) String() string {
+	switch o {
+	case SeparatorOrientationVertical:
+		return "vertical"
+	default:
+		return "horizontal"
+	}
+}
+
+func (o SeparatorOrientation) Class() string {
+	switch o {
+	case SeparatorOrientationVertical:
+		return "h-full w-[1px]"
+	default:
+		return "h-[1px] w-full"
+	}
+}
+
+const (
+	SeparatorOrientationVertical SeparatorOrientation = iota
+	SeparatorOrientationHorizontal
+)
+
+templ Separator(orientation SeparatorOrientation, decorative bool, classes string, attrs templ.Attributes) {
+	<div
+		if decorative {
+			role="none"
+		} else {
+			role="separator"
+			aria-orientation={ orientation.String() }
+		}
+		class={ twmerge.Merge(separatorBaseClass, orientation.Class(), classes) }
+	></div>
+}

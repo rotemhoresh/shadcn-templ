@@ -1,0 +1,57 @@
+package ui
+
+import (
+	"fmt"
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+)
+
+const (
+	avatarBaseClass         = "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"
+	avatarImageBaseClass    = "aspect-square h-full w-full"
+	avatarFallbackBaseClass = "flex h-full w-full items-center justify-center rounded-full bg-muted"
+)
+
+templ Avatar(classes string, attrs templ.Attributes) {
+	<span
+		class={ twmerge.Merge(avatarBaseClass, classes) }
+		{ attrs... }
+		x-data="{ status: 'loading' }"
+	>
+		{ children... }
+	</span>
+}
+
+templ AvatarImage(src, alt, classes string, attrs templ.Attributes) {
+	<img
+		x-data={ fmt.Sprintf(`{	
+			image: new Image(), 
+
+			init() {
+				this.preloadImage();
+			},
+
+			preloadImage() { 
+				this.image.onload = () => status = 'loaded'; 
+				this.image.onerror = () => status = 'error'; 
+				this.image.src = '%s'; 
+			} 
+		}`, src) }
+		src={ src }
+		alt={ alt }
+		class={ twmerge.Merge(avatarBaseClass, classes) }
+		{ attrs... }
+		x-cloak
+		x-show="status === 'loaded'"
+	/>
+}
+
+templ AvatarFallback(classes string, attrs templ.Attributes) {
+	<span
+		class={ twmerge.Merge(avatarFallbackBaseClass, classes) }
+		{ attrs... }
+		x-cloak
+		x-show="status !== 'loaded'"
+	>
+		{ children... }
+	</span>
+}

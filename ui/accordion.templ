@@ -1,0 +1,63 @@
+package ui
+
+import (
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+	"github.com/rotemhoresh/components/icons"
+)
+
+const (
+	accordionBaseClass        = "w-full"
+	accordionItemBaseClass    = "border-b"
+	accordionTriggerBaseClass = "flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline"
+	accordionContentBaseClass = "overflow-hidden text-sm"
+)
+
+templ Accordion(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(accordionBaseClass, classes) }
+		{ attrs... }
+		x-data="{ current: '' }"
+	>
+		{ children... }
+	</div>
+}
+
+templ AccordionItem(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(accordionItemBaseClass, classes) }
+		{ attrs... }
+		x-id="['accordion-item']"
+	>
+		{ children... }
+	</div>
+}
+
+templ AccordionTrigger(classes string, attrs templ.Attributes) {
+	<h3 class="flex">
+		<button
+			class={ twmerge.Merge(accordionTriggerBaseClass, classes) }
+			{ attrs... }
+			@click="current = current === $id('accordion-item') ? '' : $id('accordion-item')"
+			:class="current === $id('accordion-item') && '[&>svg]:rotate-180'"
+		>
+			{ children... }
+			@icons.ChevronDown("h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200", templ.Attributes{})
+		</button>
+	</h3>
+}
+
+templ AccorionContent(classes string, attrs templ.Attributes) {
+	<div
+		class={ accordionContentBaseClass }
+		{ attrs... }
+		x-show="current === $id('accordion-item')"
+		x-collapse
+		x-cloak
+	>
+		<div
+			class={ twmerge.Merge("pb-4 pt-0", classes) }
+		>
+			{ children... }
+		</div>
+	</div>
+}

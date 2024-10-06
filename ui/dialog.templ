@@ -1,0 +1,109 @@
+package ui
+
+import (
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+	"github.com/rotemhoresh/components/icons"
+)
+
+const (
+	dialogContentBaseClass     = "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 sm:rounded-lg fill-mode-forwards"
+	dialogCloseBaseClass       = "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+	dialogOverlayBaseClass     = "fixed inset-0 z-50 bg-black/80 fill-mode-forwards"
+	dialogHeaderBaseClass      = "flex flex-col space-y-1.5 text-center sm:text-left"
+	dialogFooterBaseClass      = "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2"
+	dialogTitleBaseClass       = "text-lg font-semibold leading-none tracking-tight"
+	dialogDescriptionBaseClass = "text-sm text-muted-foreground"
+)
+
+templ Dialog(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(classes) }
+		{ attrs... }
+		x-data="{ shadcntempl_open: false }"
+	>
+		{ children... }
+	</div>
+}
+
+// There is no element for dialog trigger, just add these attributes to your component.
+var DialogTriggerAttrs = templ.Attributes{
+	"aria-haspopup":  "dialog",
+	":aria-expanded": "shadcntempl_open",
+	"x-data":         true,
+	"x-on:click":     "shadcntempl_open = true",
+}
+
+templ DialogContent(classes string, attrs templ.Attributes) {
+	<div
+		class={ dialogOverlayBaseClass }
+		x-cloak
+		x-show="shadcntempl_open"
+		aria-hidden="true"
+		x-transition:enter="animate-in fade-in-0"
+		x-transition:leave="animate-out fade-out-0"
+	></div>
+	<div
+		class={ twmerge.Merge(dialogContentBaseClass, classes) }
+		x-cloak
+		x-show="shadcntempl_open"
+		x-trap.inert.noscroll="shadcntempl_open"
+		x-on:keydown.esc.window="shadcntempl_open = false"
+		x-on:mousedown.self="shadcntempl_open = false"
+		role="dialog"
+		aria-modal="true"
+		x-transition:enter="animate-in fade-in-0 zoom-in-95 slide-in-from-top-[48%] slide-in-from-left-1/2"
+		x-transition:leave="animate-out fade-out-0 zoom-out-95 slide-out-to-top-[48%] slide-out-to-left-1/2"
+		{ attrs... }
+	>
+		{ children... }
+		<button
+			type="button"
+			class={ dialogCloseBaseClass }
+			{ DialogCloseAttrs... }
+		>
+			@icons.X("h-4 w-4", templ.Attributes{})
+			<span class="sr-only">Close</span>
+		</button>
+	</div>
+}
+
+// If you want to add a custom close, add this attributes to your component
+var DialogCloseAttrs = templ.Attributes{
+	"x-on:click": "shadcntempl_open = false",
+}
+
+templ DialogHeader(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(dialogHeaderBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</div>
+}
+
+templ DialogFooter(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(dialogFooterBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</div>
+}
+
+templ DialogTitle(classes string, attrs templ.Attributes) {
+	<h2
+		class={ twmerge.Merge(dialogTitleBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</h2>
+}
+
+templ DialogDescription(classes string, attrs templ.Attributes) {
+	<p
+		class={ twmerge.Merge(dialogDescriptionBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</p>
+}

@@ -1,0 +1,14 @@
+package ui
+
+import "github.com/Oudwins/tailwind-merge-go"
+
+const (
+  skeletonBaseClass = "animate-pulse rounded-md bg-primary/10"
+)
+
+templ Skeleton(classes string, attrs templ.Attributes) {
+  <div
+    class={ twmerge.Merge(skeletonBaseClass, classes) }
+    { attrs... }
+  ></div>
+}

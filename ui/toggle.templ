@@ -1,0 +1,62 @@
+package ui
+
+import (
+	"fmt"
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+)
+
+const (
+	toggleBaseClass = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+)
+
+type ToggleVariant int
+
+func (v ToggleVariant) Class() string {
+	switch v {
+	case ToggleVariantSecondary:
+		return "border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground"
+	default:
+		return "bg-transparent"
+	}
+}
+
+const (
+	ToggleVariantDefault ToggleVariant = iota
+	ToggleVariantSecondary
+)
+
+type ToggleSize int
+
+func (s ToggleSize) Class() string {
+	switch s {
+	case ToggleSizeSmall:
+		return "h-8 px-2"
+	case ToggleSizeLarge:
+		return "h-10 px-3"
+	default:
+		return "h-9 px-3"
+	}
+}
+
+const (
+	ToggleSizeDefault ToggleSize = iota
+	ToggleSizeSmall
+	ToggleSizeLarge
+)
+
+templ Toggle(variant ToggleVariant, size ToggleSize, alpinePressed, classes string, attrs templ.Attributes) {
+	<button
+		type="button"
+		x-data
+		:aria-pressed={ alpinePressed }
+		:data-state={ fmt.Sprintf("%s ? 'on' : 'off'", alpinePressed) }
+		if boolAttr("disabled", attrs) {
+			data-disabled
+		}
+		x-on:click={ fmt.Sprintf("%s = ! %s", alpinePressed, alpinePressed) }
+		class={ twmerge.Merge(toggleBaseClass, variant.Class(), size.Class(), classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</button>
+}

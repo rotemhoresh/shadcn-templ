@@ -1,0 +1,66 @@
+package ui
+
+import "github.com/Oudwins/tailwind-merge-go"
+
+const (
+  cardBaseClass = "rounded-xl border bg-card text-card-foreground shadow"
+  cardHeaderBaseClass = "flex flex-col space-y-1.5 p-6"
+  cardTitleBaseClass = "font-semibold leading-none tracking-tight"
+  cardDescriptionBaseClass = "text-sm text-muted-foreground"
+  cardContentBaseClass = "p-6 pt-0"
+  cardFooterBaseClass = "flex items-center p-6 pt-0"
+)
+
+templ Card(classes string, attrs templ.Attributes) {
+  <div
+    class={ twmerge.Merge(cardBaseClass, classes) }
+    { attrs... }
+  >
+    { children... }
+  </div>
+}
+
+templ CardHeader(classes string, attrs templ.Attributes) {
+  <div
+    class={ twmerge.Merge(cardHeaderBaseClass, classes) }
+    { attrs... }
+  >
+    { children... }
+  </div>
+}
+
+templ CardTitle(classes string, attrs templ.Attributes) {
+  <h3
+    class={ twmerge.Merge(cardTitleBaseClass, classes) }
+    { attrs... }
+  >
+    { children... }
+  </h3>
+}
+
+templ CardDescription(classes string, attrs templ.Attributes) {
+  <p
+    class={ twmerge.Merge(cardDescriptionBaseClass, classes) }
+    { attrs... }
+  >
+    { children... }
+  </p>
+}
+
+templ CardContent(classes string, attrs templ.Attributes) {
+  <div
+    class={ twmerge.Merge(cardContentBaseClass, classes) }
+    { attrs... }
+  >
+    { children... }
+  </div>
+}
+
+templ CardFooter(classes string, attrs templ.Attributes) {
+  <div
+    class={ twmerge.Merge(cardFooterBaseClass, classes) }
+    { attrs... }
+  >
+    { children... }
+  </div>
+}

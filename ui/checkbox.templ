@@ -1,0 +1,52 @@
+package ui
+
+import (
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+	"github.com/rotemhoresh/components/icons"
+)
+
+const (
+	checkboxBaseClass = "peer h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+)
+
+// `attrs` will go to the inner input
+templ Checkbox(name, classes string, attrs templ.Attributes) {
+	<button
+		x-data="{ checked: false }"
+		type="button"
+		role="checkbox"
+		:aria-checked="checked"
+		if boolAttr("required", attrs) {
+			aria-required
+		}
+		:data-state="checked ? 'checked' : 'unchecked'"
+		if boolAttr("disabled", attrs) {
+			aria-disabled
+		}
+		x-on:keydown.enter.prevent=""
+		x-on:click="checked = ! checked"
+		class={ twmerge.Merge(checkboxBaseClass, classes) }
+	>
+		<input
+			type="checkbox"
+			name={ name }
+			aria-hidden
+			tabindex="-1"
+			class="absolute h-0 w-0 opacity-0"
+			x-model="checked"
+			{ attrs... }
+		/>
+		<span
+			x-data
+			class="pointer-events-none flex items-center justify-center text-current"
+			:data-state="checked ? 'checked' : 'unchecked'"
+			if boolAttr("disabled", attrs) {
+				aria-disabled
+			}
+			x-show="checked"
+			x-cloak
+		>
+			@icons.Check("h-4 w-4", templ.Attributes{})
+		</span>
+	</button>
+}

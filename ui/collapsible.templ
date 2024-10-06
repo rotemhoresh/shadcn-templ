@@ -1,0 +1,40 @@
+package ui
+
+import (
+	"fmt"
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+)
+
+templ Collapsible(defaultOpen bool, classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(classes) }
+		{ attrs... }
+		x-data={ fmt.Sprintf("{ shadcntempl_open: false, shadcntempl_disabled: %t }", boolAttr("disabled", attrs)) }
+		:data-state="shadcntempl_open ? 'open' : 'closed'"
+		:data-disabled="shadcntempl_disabled"
+	>
+		{ children... }
+	</div>
+}
+
+// There is no element for collapsible trigger, just add these attributes to your component.
+var CollapsibleTriggerAttrs = templ.Attributes{
+	"x-data":         true,
+	"x-on:click":     "shadcntempl_open = ! shadcntempl_open",
+	":aria-expanded": "shadcntempl_open",
+	":data-state":    "shadcntempl_open ? 'open' : 'closed'",
+	":data-disabled": "shadcntempl_disabled",
+}
+
+templ CollapsibleContent(classes string, attrs templ.Attributes) {
+	<div
+		x-data
+		x-show="shadcntempl_open"
+		:data-state="shadcntempl_open ? 'open' : 'closed'"
+		:data-disabled="shadcntempl_disabled"
+		class={ twmerge.Merge(classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</div>
+}

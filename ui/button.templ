@@ -1,0 +1,84 @@
+package ui
+
+import "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+
+const buttonBaseClass = "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+
+type ButtonType int
+
+const (
+	ButtonTypeButton ButtonType = iota
+	ButtonTypeSubmit
+	ButtonTypeReset
+)
+
+func (t ButtonType) String() string {
+	switch t {
+	case ButtonTypeSubmit:
+		return "submit"
+	case ButtonTypeReset:
+		return "reset"
+	default:
+		return "button"
+	}
+}
+
+type ButtonVariant int
+
+const (
+	ButtonVariantDefault ButtonVariant = iota
+	ButtonVariantDestructive
+	ButtonVariantSecondary
+	ButtonVariantOutline
+	ButtonVariantGhost
+	ButtonVariantLink
+)
+
+func (v ButtonVariant) Class() string {
+	switch v {
+	case ButtonVariantDestructive:
+		return "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90"
+	case ButtonVariantSecondary:
+		return "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80"
+	case ButtonVariantOutline:
+		return "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground"
+	case ButtonVariantGhost:
+		return "hover:bg-accent hover:text-accent-foreground"
+	case ButtonVariantLink:
+		return "text-primary underline-offset-4 hover:underline"
+	default:
+		return "bg-primary text-primary-foreground shadow hover:bg-primary/90"
+	}
+}
+
+type ButtonSize int
+
+const (
+	ButtonSizeDefault ButtonSize = iota
+	ButtonSizeSmall
+	ButtonSizeLarge
+	ButtonSizeIcon
+)
+
+func (s ButtonSize) Class() string {
+	switch s {
+	case ButtonSizeSmall:
+		return "h-8 rounded-md px-3 text-xs"
+	case ButtonSizeLarge:
+		return "h-10 rounded-md px-8"
+	case ButtonSizeIcon:
+		return "h-9 w-9"
+	default:
+		return "h-9 px-4 py-2"
+	}
+}
+
+templ Button(buttonType ButtonType, variant ButtonVariant, size ButtonSize, classes string, attrs templ.Attributes) {
+	<button
+		type={ buttonType.String() }
+		class={ twmerge.Merge(buttonBaseClass, variant.Class(), size.Class(), classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</button>
+}

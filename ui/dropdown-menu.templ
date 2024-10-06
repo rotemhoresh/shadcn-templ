@@ -1,0 +1,109 @@
+package ui;
+
+import twmerge "github.com/Oudwins/tailwind-merge-go"
+
+// TODO: add side alignment options
+
+type DropdownMenuAlign int
+
+func (a DropdownMenuAlign) Class() string {
+	switch a {
+	case DropdownMenuAlignLeft:
+		return "left-0"
+	case DropdownMenuAlignRight:
+		return "right-0"
+	default:
+		return "left-1/2 -translate-x-1/2"
+	}
+}
+
+const (
+	DropdownMenuAlignCenter DropdownMenuAlign = iota
+	DropdownMenuAlignLeft
+	DropdownMenuAlignRight
+)
+
+const (
+	dropdownMenuContentBaseClass   = "absolute botton-full mt-2 z-50 min-w-[8rem] rounded-md border bg-popover p-1 text-popover-foreground shadow-md focus:outline-none"
+	dropdownMenuItemBaseClass      = "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+	dropdownMenuSeparatorBaseClass = "-mx-1 my-1 h-px bg-muted"
+	dropdownMenuShortcutBaseClass  = "ml-auto text-xs tracking-widest opacity-60"
+	dropdownMenuLabelBaseClass     = "px-2 py-1.5 text-sm font-semibold"
+)
+
+templ DropdownMenu(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge("relative", classes) }
+		{ attrs... }
+		x-data="{ open: false }"
+		x-on:keydown.esc.window="open = false"
+	>
+		{ children... }
+	</div>
+}
+
+// There is no element for dropdown menu trigger, just add these attributes to your component.
+var DropdownMenuTriggerAttrs = templ.Attributes{
+	"x-on:mousedown":             "open = true",
+	"aria-haspopup":              "menu",
+	":aria-expanded":             "open",
+	"x-data":                     true,
+	"x-on:keydown.enter.prevent": "open = true",
+	"x-on:keydown.space.prevent": "open = true",
+	"x-on:keydown.down.prevent":  "open = true",
+}
+
+templ DropdownMenuContent(align DropdownMenuAlign, classes string, attrs templ.Attributes) {
+	<div
+		role="menu"
+		class={ twmerge.Merge(dropdownMenuContentBaseClass, align.Class(), classes) }
+		{ attrs... }
+		x-on:mousedown.outside="open = false"
+		x-show="open"
+		x-transition
+		x-trap.inert.noscroll="open"
+		x-on:keydown.down.prevent="$focus.wrap().next()"
+		x-on:keydown.up.prevent="$focus.wrap().previous()"
+		x-cloak
+	>
+		{ children... }
+	</div>
+}
+
+templ DropdownMenuItem(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(dropdownMenuItemBaseClass, classes) }
+		{ attrs... }
+		x-data
+		x-on:click="open = false"
+		tabindex="0"
+		x-on:keydown.enter="$el.click()"
+	>
+		{ children... }
+	</div>
+}
+
+templ DropdownMenuSeparator(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(dropdownMenuSeparatorBaseClass, classes) }
+		{ attrs... }
+	></div>
+}
+
+templ DropdownMenuShortcut(classes string, attrs templ.Attributes) {
+	<span
+		class={ twmerge.Merge(dropdownMenuShortcutBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</span>
+}
+
+templ DropdownMenuLabel(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(dropdownMenuLabelBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</div>
+}

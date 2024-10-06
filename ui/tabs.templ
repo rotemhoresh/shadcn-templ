@@ -1,0 +1,61 @@
+package ui
+
+import (
+	"fmt"
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+)
+
+const (
+	tabsListBaseClass    = "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground"
+	tabsTriggerBaseClass = "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow"
+	tabsContentBaseClass = "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+)
+
+templ Tabs(defaultValue, classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(classes) }
+		{ attrs... }
+		x-data={ fmt.Sprintf("{ value: '%s' }", defaultValue) }
+	>
+		{ children... }
+	</div>
+}
+
+templ TabsList(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(tabsListBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</div>
+}
+
+templ TabsTrigger(value, classes string, attrs templ.Attributes) {
+	<button
+		class={ twmerge.Merge(tabsTriggerBaseClass, classes) }
+		{ attrs... }
+		type="button"
+		role="tab"
+		:aria-selected={ fmt.Sprintf("value === '%s'", value) }
+		:data-state={ fmt.Sprintf("value === '%s' ? 'active' : 'inactive'", value) }
+		x-on:mousedown={ fmt.Sprintf("value = '%s'", value) }
+		x-on:keydown.space={ fmt.Sprintf("value = '%s'", value) }
+		x-on:keydown.enter={ fmt.Sprintf("value = '%s'", value) }
+		x-on:focus={ fmt.Sprintf("value = '%s'", value) }
+	>
+		{ children... }
+	</button>
+}
+
+templ TabsContent(value, classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(tabsContentBaseClass, classes) }
+		{ attrs... }
+		x-show={ fmt.Sprintf("value === '%s'", value) }
+    x-cloak
+		role="tabpanel"
+		tabindex="0"
+	>
+		{ children... }
+	</div>
+}

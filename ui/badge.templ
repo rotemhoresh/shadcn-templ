@@ -1,0 +1,38 @@
+package ui
+
+import "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+
+const (
+	BadgeBaseClass = "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+)
+
+type BadgeVariant int
+
+const (
+	BadgeVariantDefault = iota
+	BadgeVariantSecondary
+	BadgeVariantDestructive
+	BadgeVariantOutline
+)
+
+func (v BadgeVariant) Class() string {
+	switch v {
+	case BadgeVariantSecondary:
+		return "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80"
+	case BadgeVariantDestructive:
+		return "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80"
+	case BadgeVariantOutline:
+		return "text-foreground"
+	default:
+		return "border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80"
+	}
+}
+
+templ Badge(variant BadgeVariant, classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(BadgeBaseClass, variant.Class(), classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</div>
+}

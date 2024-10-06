@@ -1,0 +1,44 @@
+package ui
+
+import "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+
+const (
+	fieldDescriptionBaseClass = "text-[0.8rem] text-muted-foreground"
+	fieldErrorBaseClass       = "text-[0.8rem] font-medium text-destructive"
+	fieldBaseClass            = "space-y-2"
+)
+
+templ FieldDescription(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(fieldDescriptionBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</div>
+}
+
+// `id` is for [hx-swap-oob], if not needed, set it to an empty string (i.e., "")
+//
+// [hx-swap-oob]: https://htmx.org/attributes/hx-swap-oob
+templ FieldError(id, classes string, attrs templ.Attributes) {
+	<div
+		aria-live="assertive"
+		class={ twmerge.Merge(fieldErrorBaseClass, classes) }
+		if id != "" {
+			id={ id }
+			hx-swap-oob="true"
+		}
+		{ attrs... }
+	>
+		{ children... }
+	</div>
+}
+
+templ Field(classes string, attrs templ.Attributes) {
+	<div
+		class={ twmerge.Merge(fieldBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</div>
+}

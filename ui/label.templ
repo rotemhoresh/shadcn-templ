@@ -1,0 +1,16 @@
+package ui
+
+import "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+
+const (
+	labelBaseClass = "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+)
+
+templ Label(classes string, attrs templ.Attributes) {
+	<label
+		class={ twmerge.Merge(labelBaseClass, "[div:has(>div.font-medium:not(:empty))>&]:text-destructive", classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</label>
+}

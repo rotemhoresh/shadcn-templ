@@ -1,0 +1,88 @@
+package ui
+
+import "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+
+const (
+	tableBaseClass        = "w-full caption-bottom text-sm"
+	tableHeaderBaseClass  = "[&_tr]:border-b"
+	tableBodyBaseClass    = "[&_tr:last-child]:border-0"
+	tableFooterBaseClass  = "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0"
+	tableRowBaseClass     = "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+	tableHeadBaseClass    = "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
+	tableCellBaseClass    = "p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]"
+	tableCaptionBaseClass = "mt-4 text-sm text-muted-foreground"
+)
+
+templ Table(classes string, attrs templ.Attributes) {
+	<div class="relative w-full overflow-auto">
+		<table
+			class={ twmerge.Merge(tableBaseClass, classes) }
+			{ attrs... }
+		>
+			{ children... }
+		</table>
+	</div>
+}
+
+templ TableHeader(classes string, attrs templ.Attributes) {
+	<thead
+		class={ twmerge.Merge(tableHeaderBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</thead>
+}
+
+templ TableBody(classes string, attrs templ.Attributes) {
+	<tbody
+		class={ twmerge.Merge(tableBodyBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</tbody>
+}
+
+templ TableFooter(classes string, attrs templ.Attributes) {
+	<tfoot
+		class={ twmerge.Merge(tableFooterBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</tfoot>
+}
+
+templ TableRow(classes string, attrs templ.Attributes) {
+	<tr
+		class={ twmerge.Merge(tableRowBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</tr>
+}
+
+templ TableHead(classes string, attrs templ.Attributes) {
+	<th
+		class={ twmerge.Merge(tableHeadBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</th>
+}
+
+templ TableCell(classes string, attrs templ.Attributes) {
+	<td
+		class={ twmerge.Merge(tableCellBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</td>
+}
+
+templ TableCaption(classes string, attrs templ.Attributes) {
+	<caption
+		class={ twmerge.Merge(tableCaptionBaseClass, classes) }
+		{ attrs... }
+	>
+		{ children... }
+	</caption>
+}

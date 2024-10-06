@@ -1,0 +1,92 @@
+package ui
+
+import "github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+
+const (
+	inputBaseClass = "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+)
+
+type InputType int
+
+const (
+	InputTypeText InputType = iota
+	InputTypeEmail
+	InputTypePassword
+	InputTypeSearch
+	InputTypeUrl
+	InputTypeTel
+	InputTypeDate
+	InputTypeDatetimeLocal
+	InputTypeNumber
+	InputTypeButton
+	InputTypeFile
+	InputTypeHidden
+	InputTypeImage
+	InputTypeMonth
+	InputTypeWeek
+	InputTypeCheckbox
+	InputTypeColor
+	InputTypeRadio
+	InputTypeRange
+	InputTypeReset
+	InputTypeSubmit
+	InputTypeTime
+)
+
+func (t InputType) String() string {
+	switch t {
+	case InputTypeEmail:
+		return "email"
+	case InputTypePassword:
+		return "password"
+	case InputTypeSearch:
+		return "search"
+	case InputTypeUrl:
+		return "url"
+	case InputTypeTel:
+		return "tel"
+	case InputTypeDate:
+		return "date"
+	case InputTypeDatetimeLocal:
+		return "datetime-local"
+	case InputTypeNumber:
+		return "number"
+	case InputTypeButton:
+		return "button"
+	case InputTypeFile:
+		return "file"
+	case InputTypeHidden:
+		return "hidden"
+	case InputTypeImage:
+		return "image"
+	case InputTypeMonth:
+		return "month"
+	case InputTypeWeek:
+		return "week"
+	case InputTypeCheckbox:
+		return "checkbox"
+	case InputTypeColor:
+		return "color"
+	case InputTypeRadio:
+		return "radio"
+	case InputTypeRange:
+		return "range"
+	case InputTypeReset:
+		return "reset"
+	case InputTypeSubmit:
+		return "submit"
+	case InputTypeTime:
+		return "time"
+	default:
+		return "text"
+	}
+}
+
+templ Input(name string, inputType InputType, classes string, attrs templ.Attributes) {
+	<input
+		type={ inputType.String() }
+		name={ name }
+		class={ twmerge.Merge(inputBaseClass, classes) }
+		{ attrs... }
+	/>
+}
