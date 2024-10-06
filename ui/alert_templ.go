@@ -24,21 +24,12 @@ type AlertVariant int
 const (
 	AlertVariantDefault AlertVariant = iota
 	AlertVariantDestructive
-	AlertVariantSuccess
-	AlertVariantWarning
-	AlertVariantInfo
 )
 
 func (v AlertVariant) Class() string {
 	switch v {
 	case AlertVariantDestructive:
 		return "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive"
-	case AlertVariantSuccess:
-		return "bg-success text-success-foreground"
-	case AlertVariantWarning:
-		return "bg-warning text-warning-foreground"
-	case AlertVariantInfo:
-		return "bg-info text-info-foreground"
 	default:
 		return "bg-background text-foreground"
 	}
@@ -48,29 +39,8 @@ func (v AlertVariant) Icon() templ.Component {
 	switch v {
 	case AlertVariantDestructive:
 		return icons.CircleX("size-4", templ.Attributes{})
-	case AlertVariantSuccess:
-		return icons.CircleCheck("size-4", templ.Attributes{})
-	case AlertVariantWarning:
-		return icons.CircleCheck("size-4", templ.Attributes{})
-	case AlertVariantInfo:
-		return icons.CircleCheck("size-4", templ.Attributes{})
 	default:
 		return icons.CircleCheck("size-4", templ.Attributes{})
-	}
-}
-
-func (v AlertVariant) Title() string {
-	switch v {
-	case AlertVariantDestructive:
-		return "Error"
-	case AlertVariantSuccess:
-		return "Success"
-	case AlertVariantWarning:
-		return "Warning"
-	case AlertVariantInfo:
-		return "Info"
-	default:
-		return "Default"
 	}
 }
 

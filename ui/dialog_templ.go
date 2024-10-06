@@ -133,7 +133,7 @@ func DialogContent(classes string, attrs templ.Attributes) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-cloak x-show=\"shadcntempl_open\" aria-hidden=\"true\" x-transition:enter=\"animate-in fade-in-0\" x-transition:leave=\"animate-out fade-out-0\"></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-cloak x-show=\"shadcntempl_open\" aria-hidden=\"true\" x-transition:enter=\"animate-in fade-in-0\" x-transition:leave=\"animate-out fade-out-0\" x-on:mousedown.self=\"shadcntempl_open = false\"></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -155,7 +155,7 @@ func DialogContent(classes string, attrs templ.Attributes) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-cloak x-show=\"shadcntempl_open\" x-trap.inert.noscroll=\"shadcntempl_open\" x-on:keydown.esc.window=\"shadcntempl_open = false\" x-on:mousedown.self=\"shadcntempl_open = false\" role=\"dialog\" aria-modal=\"true\" x-transition:enter=\"animate-in fade-in-0 zoom-in-95 slide-in-from-top-[48%] slide-in-from-left-1/2\" x-transition:leave=\"animate-out fade-out-0 zoom-out-95 slide-out-to-top-[48%] slide-out-to-left-1/2\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" x-cloak x-show=\"shadcntempl_open\" x-trap.inert.noscroll=\"shadcntempl_open\" x-on:keydown.esc.window=\"shadcntempl_open = false\" role=\"dialog\" aria-modal=\"true\" x-transition:enter=\"animate-in fade-in-0 zoom-in-95 slide-in-from-top-[48%] slide-in-from-left-1/2\" x-transition:leave=\"animate-out fade-out-0 zoom-out-95 slide-out-to-top-[48%] slide-out-to-left-1/2\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
