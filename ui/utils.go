@@ -1,6 +1,10 @@
 package ui
 
-import "github.com/a-h/templ"
+import (
+	"fmt"
+
+	"github.com/a-h/templ"
+)
 
 // boolAttr checks if an attribute exists and has a true value - `true` (bool) or `"true"` (string).
 func boolAttr(attr string, attrs templ.Attributes) bool {
@@ -12,4 +16,8 @@ func boolAttr(attr string, attrs templ.Attributes) bool {
 		}
 	}
 	return false
+}
+
+func fmtBool(v bool) string {
+	return fmt.Sprintf("%t", v)
 }
