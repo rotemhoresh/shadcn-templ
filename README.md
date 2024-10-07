@@ -16,9 +16,19 @@ This is a work in proccess.
 
 A [shadcn/ui](https://ui.shadcn.com/) port using [Go](https://go.dev/), [Templ](https://templ.guide/), [Alpine.js](https://alpinejs.dev/) and [Tailwind CSS](https://tailwindcss.com/).
 
+### Components
+
+[issue](https://github.com/rotemhoresh/shadcn-templ/issues/1#issue-2570468143).
+
+### Roadmap
+
+- Adding all the components from shadcn/ui
+- Making sure the components are of good quality: Accessibility, Correct functionality, Style, etc.
+- Creating a CLI to have a flow similar to shadcn's.
+
 ### Usage 
 
-You have to include the [Head](https://github.com/rotemhoresh/shadcn-templ/blob/main/include.templ#L4) component in your `head` tag (it includes the neccessery scripts - HTMX, Alpine.js and a theme script).
+You have to include the [Head](https://github.com/rotemhoresh/shadcn-templ/blob/main/include.templ#L4) component in your `head` tag (it includes the neccessery scripts - Alpine.js and a theme script).
 You have to serve the [CSS](https://github.com/rotemhoresh/shadcn-templ/blob/main/css.go#L10) var and link to it in your `head` tag.
 
 Example:
@@ -35,10 +45,9 @@ templ Layout() {
   <!DOCTYPE html>
 	<html lang="en">
 		<head>
-      // ...
-      @shadcntempl.Head()
+			// ...
+			@shadcntempl.Head()
 			<link rel="stylesheet" href="/static/css/styles.css"/>
-      // ...
 		</head>
 		<body>
 			{ children... }
