@@ -1,5 +1,9 @@
 # Shadcn/ui port for Go + Templ + Alpine.js + Tailwind CSS
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/rotemhoresh/shadcn-templ.svg)](https://pkg.go.dev/github.com/rotemhoresh/shadcn-templ)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Go Report Card](https://goreportcard.com/badge/github.com/rotemhoresh/shadcn-templ)](https://goreportcard.com/report/github.com/rotemhoresh/shadcn-templ)
+
 ### Note
 
 This is a work in proccess. 
@@ -68,11 +72,13 @@ templ Comp(componentSpecificParams, classes string, attrs templ.Attributes)
 
 Any **components specific parameters** at the begining, then **classes** and **attrs** for every component (see [example](#example) for the params of the `Button` component).
 
+The components are written with constant referencing to the shadcn/ui source code and the underlying radix components. 
+
 ## Contributing
 
 Contributions are welcome for both new components and improvements for existing ones.
 
-Make sure to read the README.md and go over the codebase to understand the design choices and overall coding style.
+Make sure to read the README and go over the codebase to understand the design choices and overall coding style as well as getting familiar with shadcn/ui.
 
 ### License 
 
