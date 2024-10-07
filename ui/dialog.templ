@@ -41,12 +41,12 @@ templ DialogContent(classes string, attrs templ.Attributes) {
 		aria-hidden="true"
 		x-transition:enter="animate-in fade-in-0"
 		x-transition:leave="animate-out fade-out-0"
-		x-on:mousedown.self="shadcntempl_open = false"
 	></div>
 	<div
 		class={ twmerge.Merge(dialogContentBaseClass, classes) }
 		x-cloak
 		x-show="shadcntempl_open"
+		x-on:mousedown.outside="shadcntempl_open = false"
 		x-trap.inert.noscroll="shadcntempl_open"
 		x-on:keydown.esc.window="shadcntempl_open = false"
 		role="dialog"
