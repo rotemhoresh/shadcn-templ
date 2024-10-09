@@ -1,0 +1,61 @@
+package aspectratio
+
+import (
+	"fmt"
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+	"github.com/rotemhoresh/shadcn-templ/ui"
+)
+
+type RootProps struct {
+	ratio float32
+	ui.CoreProps
+}
+
+type RootOption = ui.Option[*RootProps]
+
+// note that `16/9` will result in `1`. you need to convert one of the numbers to float, e.g., `16.0/9.0`.
+func WithRatio(r float32) RootOption {
+	return func(p *RootProps) {
+		p.ratio = r
+	}
+}
+
+//go:generate go run ../optalias_generator.go -type=RootProps
+
+func Root(opts ...RootOption) templ.Component {
+	p := &RootProps{
+		ratio:     1 / 1,
+		CoreProps: ui.DefaultCoreProps,
+	}
+	for _, opt := range opts {
+		opt(p)
+	}
+	return root(p)
+}
+
+css rootStyle() {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+css rootWrapperStyle(r float32) {
+	position: relative;
+	width: 100%;
+	padding-bottom: { fmt.Sprintf("%.2f%%", 100/r) };
+}
+
+templ root(props *RootProps) {
+	<div
+		class={ rootWrapperStyle(props.ratio) }
+	>
+		<div
+			class={ rootStyle(), twmerge.Merge(props.Class()) }
+			{ props.Attrs()... }
+		>
+			{ children... }
+		</div>
+	</div>
+}

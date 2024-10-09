@@ -76,40 +76,40 @@ func (s Size) Class() string {
 	}
 }
 
+type RootProps struct {
+	typ     Type
+	variant Variant
+	size    Size
+	ui.CoreProps
+}
+
 type RootOption = ui.Option[*RootProps]
 
 func WithType(t Type) RootOption {
 	return func(p *RootProps) {
-		p.Type = t
+		p.typ = t
 	}
 }
 
 func WithVariant(v Variant) RootOption {
 	return func(p *RootProps) {
-		p.Variant = v
+		p.variant = v
 	}
 }
 
 func WithSize(s Size) RootOption {
 	return func(p *RootProps) {
-		p.Size = s
+		p.size = s
 	}
 }
 
 //go:generate go run ../optalias_generator.go -type=RootProps
 
-type RootProps struct {
-	Type    Type
-	Variant Variant
-	Size    Size
-	ui.CoreProps
-}
-
 func Root(opts ...RootOption) templ.Component {
 	p := &RootProps{
-		Type:      TypeButton,
-		Variant:   VariantDefault,
-		Size:      SizeDefault,
+		typ:       TypeButton,
+		variant:   VariantDefault,
+		size:      SizeDefault,
 		CoreProps: ui.DefaultCoreProps,
 	}
 	for _, opt := range opts {
@@ -120,8 +120,8 @@ func Root(opts ...RootOption) templ.Component {
 
 templ root(props *RootProps) {
 	<button
-		type={ props.Type.String() }
-		class={ twmerge.Merge(baseClass, props.Variant.Class(), props.Size.Class(), props.Class()) }
+		type={ props.typ.String() }
+		class={ twmerge.Merge(baseClass, props.variant.Class(), props.size.Class(), props.Class()) }
 		{ props.Attrs()... }
 	>
 		{ children... }

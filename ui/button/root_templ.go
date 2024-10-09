@@ -84,40 +84,40 @@ func (s Size) Class() string {
 	}
 }
 
+type RootProps struct {
+	typ     Type
+	variant Variant
+	size    Size
+	ui.CoreProps
+}
+
 type RootOption = ui.Option[*RootProps]
 
 func WithType(t Type) RootOption {
 	return func(p *RootProps) {
-		p.Type = t
+		p.typ = t
 	}
 }
 
 func WithVariant(v Variant) RootOption {
 	return func(p *RootProps) {
-		p.Variant = v
+		p.variant = v
 	}
 }
 
 func WithSize(s Size) RootOption {
 	return func(p *RootProps) {
-		p.Size = s
+		p.size = s
 	}
 }
 
 //go:generate go run ../optalias_generator.go -type=RootProps
 
-type RootProps struct {
-	Type    Type
-	Variant Variant
-	Size    Size
-	ui.CoreProps
-}
-
 func Root(opts ...RootOption) templ.Component {
 	p := &RootProps{
-		Type:      TypeButton,
-		Variant:   VariantDefault,
-		Size:      SizeDefault,
+		typ:       TypeButton,
+		variant:   VariantDefault,
+		size:      SizeDefault,
 		CoreProps: ui.DefaultCoreProps,
 	}
 	for _, opt := range opts {
@@ -147,7 +147,7 @@ func root(props *RootProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		var templ_7745c5c3_Var2 = []any{twmerge.Merge(baseClass, props.Variant.Class(), props.Size.Class(), props.Class())}
+		var templ_7745c5c3_Var2 = []any{twmerge.Merge(baseClass, props.variant.Class(), props.size.Class(), props.Class())}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -157,9 +157,9 @@ func root(props *RootProps) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(props.Type.String())
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(props.typ.String())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/button/root.templ`, Line: 123, Col: 28}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/button/root.templ`, Line: 123, Col: 27}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
