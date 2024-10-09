@@ -104,11 +104,7 @@ func WithSize(s Size) RootOption {
 	}
 }
 
-var (
-	WithClass = ui.WithClass[*RootProps]
-	WithAttrs = ui.WithAttrs[*RootProps]
-	WithAttr  = ui.WithAttr[*RootProps]
-)
+//go:generate go run ../optalias_generator.go -type=RootProps
 
 type RootProps struct {
 	Type    Type
@@ -119,9 +115,10 @@ type RootProps struct {
 
 func Root(opts ...RootOption) templ.Component {
 	p := &RootProps{
-		Type:    TypeButton,
-		Variant: VariantDefault,
-		Size:    SizeDefault,
+		Type:      TypeButton,
+		Variant:   VariantDefault,
+		Size:      SizeDefault,
+		CoreProps: ui.DefaultCoreProps,
 	}
 	for _, opt := range opts {
 		opt(p)
@@ -162,7 +159,7 @@ func root(props *RootProps) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(props.Type.String())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/button/root.templ`, Line: 126, Col: 28}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/button/root.templ`, Line: 123, Col: 28}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

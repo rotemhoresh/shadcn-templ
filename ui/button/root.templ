@@ -96,11 +96,7 @@ func WithSize(s Size) RootOption {
 	}
 }
 
-var (
-	WithClass = ui.WithClass[*RootProps]
-	WithAttrs = ui.WithAttrs[*RootProps]
-	WithAttr  = ui.WithAttr[*RootProps]
-)
+//go:generate go run ../optalias_generator.go -type=RootProps
 
 type RootProps struct {
 	Type    Type
@@ -111,9 +107,10 @@ type RootProps struct {
 
 func Root(opts ...RootOption) templ.Component {
 	p := &RootProps{
-		Type:    TypeButton,
-		Variant: VariantDefault,
-		Size:    SizeDefault,
+		Type:      TypeButton,
+		Variant:   VariantDefault,
+		Size:      SizeDefault,
+		CoreProps: ui.DefaultCoreProps,
 	}
 	for _, opt := range opts {
 		opt(p)

@@ -30,6 +30,11 @@ type CoreProps struct {
 	attrs templ.Attributes
 }
 
+var DefaultCoreProps = CoreProps{
+	class: "",
+	attrs: templ.Attributes{},
+}
+
 var _ CorePropsInter = (*CoreProps)(nil)
 
 type CorePropsInter interface {
