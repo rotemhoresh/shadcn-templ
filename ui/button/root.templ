@@ -1,0 +1,132 @@
+package button
+
+import (
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+	"github.com/rotemhoresh/shadcn-templ/ui"
+)
+
+const baseClass = "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+
+type Type int
+
+const (
+	TypeButton Type = iota
+	TypeSubmit
+	TypeReset
+)
+
+func (t Type) String() string {
+	switch t {
+	case TypeSubmit:
+		return "submit"
+	case TypeReset:
+		return "reset"
+	default:
+		return "button"
+	}
+}
+
+type Variant int
+
+const (
+	VariantDefault Variant = iota
+	VariantDestructive
+	VariantSecondary
+	VariantOutline
+	VariantGhost
+	VariantLink
+)
+
+func (v Variant) Class() string {
+	switch v {
+	case VariantDestructive:
+		return "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90"
+	case VariantSecondary:
+		return "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80"
+	case VariantOutline:
+		return "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground"
+	case VariantGhost:
+		return "hover:bg-accent hover:text-accent-foreground"
+	case VariantLink:
+		return "text-primary underline-offset-4 hover:underline"
+	default:
+		return "bg-primary text-primary-foreground shadow hover:bg-primary/90"
+	}
+}
+
+type Size int
+
+const (
+	SizeDefault Size = iota
+	SizeSmall
+	SizeLarge
+	SizeIcon
+)
+
+func (s Size) Class() string {
+	switch s {
+	case SizeSmall:
+		return "h-8 rounded-md px-3 text-xs"
+	case SizeLarge:
+		return "h-10 rounded-md px-8"
+	case SizeIcon:
+		return "h-9 w-9"
+	default:
+		return "h-9 px-4 py-2"
+	}
+}
+
+type RootOption = ui.Option[*RootProps]
+
+func WithType(t Type) RootOption {
+	return func(p *RootProps) {
+		p.Type = t
+	}
+}
+
+func WithVariant(v Variant) RootOption {
+	return func(p *RootProps) {
+		p.Variant = v
+	}
+}
+
+func WithSize(s Size) RootOption {
+	return func(p *RootProps) {
+		p.Size = s
+	}
+}
+
+var (
+	WithClass = ui.WithClass[*RootProps]
+	WithAttrs = ui.WithAttrs[*RootProps]
+	WithAttr  = ui.WithAttr[*RootProps]
+)
+
+type RootProps struct {
+	Type    Type
+	Variant Variant
+	Size    Size
+	ui.CoreProps
+}
+
+func Root(opts ...RootOption) templ.Component {
+	p := &RootProps{
+		Type:    TypeButton,
+		Variant: VariantDefault,
+		Size:    SizeDefault,
+	}
+	for _, opt := range opts {
+		opt(p)
+	}
+	return root(p)
+}
+
+templ root(props *RootProps) {
+	<button
+		type={ props.Type.String() }
+		class={ twmerge.Merge(baseClass, props.Variant.Class(), props.Size.Class(), props.Class()) }
+		{ props.Attrs()... }
+	>
+		{ children... }
+	</button>
+}
