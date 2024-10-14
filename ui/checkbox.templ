@@ -46,7 +46,9 @@ templ Checkbox(name, classes string, attrs templ.Attributes) {
 			x-show="checked"
 			x-cloak
 		>
-			@icons.Check("h-4 w-4", templ.Attributes{})
+			@icons.Check(icons.Props{
+				Class: "h-4 w-4",
+			})
 		</span>
 	</button>
 }

@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
-	"github.com/rotemhoresh/shadcn-templ/ui"
+	p "github.com/rotemhoresh/shadcn-templ/primitives"
 )
 
 const baseClass = "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
@@ -85,48 +85,13 @@ func (s Size) Class() string {
 }
 
 type RootProps struct {
-	typ     Type
-	variant Variant
-	size    Size
-	ui.CoreProps
+	Type    Type    // default: [TypeButton]
+	Variant Variant // default: [VariantDefault]
+	Size    Size    // default: [SizeDefault]
+	p.CoreProps
 }
 
-type RootOption = ui.Option[*RootProps]
-
-func WithType(t Type) RootOption {
-	return func(p *RootProps) {
-		p.typ = t
-	}
-}
-
-func WithVariant(v Variant) RootOption {
-	return func(p *RootProps) {
-		p.variant = v
-	}
-}
-
-func WithSize(s Size) RootOption {
-	return func(p *RootProps) {
-		p.size = s
-	}
-}
-
-//go:generate go run ../optalias_generator.go -type=RootProps
-
-func Root(opts ...RootOption) templ.Component {
-	p := &RootProps{
-		typ:       TypeButton,
-		variant:   VariantDefault,
-		size:      SizeDefault,
-		CoreProps: ui.DefaultCoreProps,
-	}
-	for _, opt := range opts {
-		opt(p)
-	}
-	return root(p)
-}
-
-func root(props *RootProps) templ.Component {
+func Root(props RootProps) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -147,7 +112,7 @@ func root(props *RootProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		var templ_7745c5c3_Var2 = []any{twmerge.Merge(baseClass, props.variant.Class(), props.size.Class(), props.Class())}
+		var templ_7745c5c3_Var2 = []any{twmerge.Merge(baseClass, props.Variant.Class(), props.Size.Class(), props.Class)}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -157,9 +122,9 @@ func root(props *RootProps) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(props.typ.String())
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(props.Type.String())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/button/root.templ`, Line: 123, Col: 27}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/button/root.templ`, Line: 88, Col: 28}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -182,7 +147,7 @@ func root(props *RootProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, props.Attrs())
+		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, props.Attrs)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

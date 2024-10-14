@@ -1,0 +1,15 @@
+package dialog
+
+import (
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+	"github.com/rotemhoresh/shadcn-templ/primitives/dialog"
+)
+
+const descriptionClass = "text-sm text-muted-foreground"
+
+type DescriptionProps = dialog.DescriptionProps
+
+func Description(props DescriptionProps) templ.Component {
+	props.Class = twmerge.Merge(descriptionClass, props.Class)
+	return dialog.Description(props)
+}

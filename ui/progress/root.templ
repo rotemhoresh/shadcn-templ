@@ -1,0 +1,98 @@
+package progress
+
+import (
+	"fmt"
+	twmerge "github.com/Oudwins/tailwind-merge-go"
+	"github.com/rotemhoresh/shadcn-templ/ui"
+)
+
+const (
+	baseClass          = "relative h-2 w-full overflow-hidden rounded-full bg-primary/20"
+	indicatorBaseClass = "h-full w-full flex-1 bg-primary transition-all"
+)
+
+const maxVal uint = 100
+
+type RootProps struct {
+	control string
+	value   uint
+	ui.CoreProps
+}
+
+type RootOption = ui.Option[*RootProps]
+
+// provide a controling variable created using `x-data` on a parent component
+func WithControl(c string) RootOption {
+	return func(p *RootProps) {
+		p.control = c
+	}
+}
+
+// if a control is provided, `value` will be ignored.
+//
+// default value - 0
+func WithValue(v uint) RootOption {
+	return func(p *RootProps) {
+		p.value = v
+	}
+}
+
+//go:generate go run ../optalias_generator.go -type=RootProps
+
+func Root(opts ...RootOption) templ.Component {
+	p := &RootProps{
+		CoreProps: ui.DefaultCoreProps,
+	}
+	for _, opt := range opts {
+		opt(p)
+	}
+	return root(p)
+}
+
+css uncontrolledIndicatorStyle(v uint) {
+	transform: { fmt.Sprintf("translateX(%d)", -1 * (100 - int(v))) };
+}
+
+templ root(props *RootProps) {
+	<div
+		aria-valuemax={ fmt.Sprintf("%d", maxVal) }
+		aria-valuemin="0"
+		if props.control != "" {
+			:aria-valuenow={ props.control }
+			:aria-valuetext={ fmt.Sprintf("`${Math.round((%s / %d) * 100)}%%`", props.control, maxVal) }
+			:data-state={ fmt.Sprintf("%s == %d ? 'complete' : 'loading'", props.control, maxVal) }
+			:data-value={ props.control }
+		} else {
+			aria-valuenow={ fmt.Sprintf("%d", props.value) }
+			aria-valuetext={ fmt.Sprintf("%d%%", (props.value/maxVal)*100) }
+			if props.value == maxVal {
+				data-state="complete"
+			} else {
+				data-state="loading"
+			}
+			data-value={ fmt.Sprintf("%d", props.value) }
+		}
+		data-max={ fmt.Sprintf("%d", maxVal) }
+		role="progressbar"
+		class={ twmerge.Merge(baseClass, props.Class()) }
+		{ props.Attrs()... }
+	>
+		<div
+			if props.control != "" {
+				:data-state={ fmt.Sprintf("%s == %d ? 'complete' : 'loading'", props.control, maxVal) }
+				:data-value={ props.control }
+				:style={ fmt.Sprintf("{ transform: `translateX(-${100 - %s})` }", props.control) }
+				class={ indicatorBaseClass }
+			} else {
+				if props.value == maxVal {
+					data-state="complete"
+				} else {
+					data-state="loading"
+				}
+				data-value={ fmt.Sprintf("%d", props.value) }
+				class={ indicatorBaseClass, uncontrolledIndicatorStyle(props.value) }
+			}
+			data-max={ fmt.Sprintf("%d", maxVal) }
+		></div>
+	</div>
+}

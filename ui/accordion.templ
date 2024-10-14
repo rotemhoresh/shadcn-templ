@@ -41,7 +41,9 @@ templ AccordionTrigger(classes string, attrs templ.Attributes) {
 			:class="current === $id('accordion-item') && '[&>svg]:rotate-180'"
 		>
 			{ children... }
-			@icons.ChevronDown("h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200", templ.Attributes{})
+			@icons.ChevronDown(icons.Props{
+				Class: "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
+			})
 		</button>
 	</h3>
 }

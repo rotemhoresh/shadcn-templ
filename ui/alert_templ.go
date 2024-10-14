@@ -38,9 +38,13 @@ func (v AlertVariant) Class() string {
 func (v AlertVariant) Icon() templ.Component {
 	switch v {
 	case AlertVariantDestructive:
-		return icons.CircleX("size-4", templ.Attributes{})
+		return icons.CircleX(icons.Props{
+			Class: "h-4 w-4",
+		})
 	default:
-		return icons.CircleCheck("size-4", templ.Attributes{})
+		return icons.CircleCheck(icons.Props{
+			Class: "h-4 w-4",
+		})
 	}
 }
 

@@ -1,0 +1,20 @@
+package dialog
+
+import p "github.com/rotemhoresh/shadcn-templ/primitives"
+
+type OverlayProps struct {
+	p.CoreProps
+}
+
+templ Overlay(props OverlayProps) {
+	<div
+		:data-state={ getState(control) }
+		x-show={ control }
+		x-cloak
+		style="pointer-events: auto;"
+		class={ props.Class }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</div>
+}

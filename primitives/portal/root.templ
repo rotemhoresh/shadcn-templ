@@ -1,0 +1,24 @@
+package portal
+
+const DefaultSelector = "body"
+
+type RootProps struct {
+	Selector string
+	Attrs    templ.Attributes
+}
+
+func Root(props RootProps) templ.Component {
+	if props.Selector == "" {
+		props.Selector = DefaultSelector
+	}
+	return root(props)
+}
+
+templ root(props RootProps) {
+	<template
+		x-teleport={ props.Selector }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</template>
+}

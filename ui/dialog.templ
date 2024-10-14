@@ -61,7 +61,9 @@ templ DialogContent(classes string, attrs templ.Attributes) {
 			class={ dialogCloseBaseClass }
 			{ DialogCloseAttrs... }
 		>
-			@icons.X("h-4 w-4", templ.Attributes{})
+			@icons.X(icons.Props{
+				Class: "h-4 w-4",
+			})
 			<span class="sr-only">Close</span>
 		</button>
 	</div>

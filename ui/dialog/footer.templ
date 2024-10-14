@@ -1,0 +1,21 @@
+package dialog
+
+import (
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+	p "github.com/rotemhoresh/shadcn-templ/primitives"
+)
+
+const footerClass = "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2"
+
+type FooterProps struct {
+	p.CoreProps
+}
+
+templ Footer(props FooterProps) {
+	<div
+		class={ twmerge.Merge(footerClass, props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</div>
+}

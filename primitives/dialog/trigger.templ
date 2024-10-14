@@ -1,0 +1,15 @@
+package dialog
+
+import (
+	"fmt"
+	p "github.com/rotemhoresh/shadcn-templ/primitives"
+)
+
+// There is no element for dialog trigger, just add these attributes to your component.
+var Trigger = templ.Attributes{
+	"aria-haspopup":  "dialog",
+	":aria-expanded": control,
+	":aria-controls": p.Id(scopeName, contentName),
+	":data-state":    getState(control),
+	"x-on:click":     fmt.Sprintf("%s = true", control),
+}

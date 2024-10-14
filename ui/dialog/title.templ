@@ -1,0 +1,15 @@
+package dialog
+
+import (
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+	"github.com/rotemhoresh/shadcn-templ/primitives/dialog"
+)
+
+const titleClass = "text-lg font-semibold leading-none tracking-tight"
+
+type TitleProps = dialog.TitleProps
+
+func Title(props TitleProps) templ.Component {
+	props.Class = twmerge.Merge(titleClass, props.Class)
+	return dialog.Title(props)
+}

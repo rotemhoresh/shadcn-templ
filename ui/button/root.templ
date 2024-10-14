@@ -2,7 +2,7 @@ package button
 
 import (
 	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
-	"github.com/rotemhoresh/shadcn-templ/ui"
+	p "github.com/rotemhoresh/shadcn-templ/primitives"
 )
 
 const baseClass = "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
@@ -77,52 +77,17 @@ func (s Size) Class() string {
 }
 
 type RootProps struct {
-	typ     Type
-	variant Variant
-	size    Size
-	ui.CoreProps
+	Type    Type    // default: [TypeButton]
+	Variant Variant // default: [VariantDefault]
+	Size    Size    // default: [SizeDefault]
+	p.CoreProps
 }
 
-type RootOption = ui.Option[*RootProps]
-
-func WithType(t Type) RootOption {
-	return func(p *RootProps) {
-		p.typ = t
-	}
-}
-
-func WithVariant(v Variant) RootOption {
-	return func(p *RootProps) {
-		p.variant = v
-	}
-}
-
-func WithSize(s Size) RootOption {
-	return func(p *RootProps) {
-		p.size = s
-	}
-}
-
-//go:generate go run ../optalias_generator.go -type=RootProps
-
-func Root(opts ...RootOption) templ.Component {
-	p := &RootProps{
-		typ:       TypeButton,
-		variant:   VariantDefault,
-		size:      SizeDefault,
-		CoreProps: ui.DefaultCoreProps,
-	}
-	for _, opt := range opts {
-		opt(p)
-	}
-	return root(p)
-}
-
-templ root(props *RootProps) {
+templ Root(props RootProps) {
 	<button
-		type={ props.typ.String() }
-		class={ twmerge.Merge(baseClass, props.variant.Class(), props.size.Class(), props.Class()) }
-		{ props.Attrs()... }
+		type={ props.Type.String() }
+		class={ twmerge.Merge(baseClass, props.Variant.Class(), props.Size.Class(), props.Class) }
+		{ props.Attrs... }
 	>
 		{ children... }
 	</button>

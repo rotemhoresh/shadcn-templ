@@ -1,0 +1,21 @@
+package dialog
+
+import (
+	"github.com/Oudwins/tailwind-merge-go/pkg/twmerge"
+	p "github.com/rotemhoresh/shadcn-templ/primitives"
+)
+
+const headerClass = "flex flex-col space-y-1.5 text-center sm:text-left"
+
+type HeaderProps struct {
+	p.CoreProps
+}
+
+templ Header(props HeaderProps) {
+	<div
+		class={ twmerge.Merge(headerClass, props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</div>
+}

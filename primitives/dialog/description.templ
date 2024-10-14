@@ -1,0 +1,19 @@
+package dialog
+
+import p "github.com/rotemhoresh/shadcn-templ/primitives"
+
+const descriptionName = "description"
+
+type DescriptionProps struct {
+	p.CoreProps
+}
+
+templ Description(props DescriptionProps) {
+	<p
+		:id={ p.Id(scopeName, descriptionName) }
+		class={ props.Class }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</p>
+}

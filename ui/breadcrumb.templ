@@ -47,7 +47,9 @@ templ BreadcrumbSeparator(classes string, attrs templ.Attributes) {
 		class={ twmerge.Merge(breadcrumbSeparatorBaseClass, classes) }
 		{ attrs... }
 	>
-		@icons.ChevronRight("size-4", templ.Attributes{})
+		@icons.ChevronRight(icons.Props{
+			Class: "h-4 w-4",
+		})
 	</li>
 }
 

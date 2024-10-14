@@ -205,7 +205,9 @@ func AccordionTrigger(classes string, attrs templ.Attributes) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = icons.ChevronDown("h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200", templ.Attributes{}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = icons.ChevronDown(icons.Props{
+			Class: "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
+		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

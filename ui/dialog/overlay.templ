@@ -1,0 +1,17 @@
+package dialog
+
+import (
+	twmerge "github.com/Oudwins/tailwind-merge-go"
+	"github.com/rotemhoresh/shadcn-templ/primitives/dialog"
+)
+
+const overlayClass = "fixed inset-0 z-50 bg-black/80 fill-mode-forwards"
+
+type OverlayProps = dialog.OverlayProps
+
+func Overlay(props OverlayProps) templ.Component {
+	props.Class = twmerge.Merge(overlayClass, props.Class)
+	props.AddAttr("x-transition:enter", "animate-in fade-in-0")
+	props.AddAttr("x-transition:leave", "animate-out fade-out-0")
+	return dialog.Overlay(props)
+}

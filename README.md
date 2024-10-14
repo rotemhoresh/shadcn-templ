@@ -6,6 +6,8 @@
 
 ### Note
 
+*The codebase is going through a change in structure, so it's currently a bit messy*
+
 This is a work in proccess. 
 
 - Not all the components from shadcn/ui are implemented.

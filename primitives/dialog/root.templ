@@ -1,0 +1,27 @@
+package dialog
+
+import (
+	"fmt"
+	twmerge "github.com/Oudwins/tailwind-merge-go"
+	p "github.com/rotemhoresh/shadcn-templ/primitives"
+)
+
+// TODO: support controlled dialog state
+// TODO: add a modal prop
+
+type RootProps struct {
+	p.CoreProps
+}
+
+templ Root(props RootProps) {
+	<div
+		x-id={ fmt.Sprintf("['%s']", scopeName) }
+		x-data={ p.Data{
+      control: "false",
+    }.String() }
+		class={ twmerge.Merge(props.Class) }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</div>
+}

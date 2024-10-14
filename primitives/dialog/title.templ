@@ -1,0 +1,19 @@
+package dialog
+
+import p "github.com/rotemhoresh/shadcn-templ/primitives"
+
+const titleName = "title"
+
+type TitleProps struct {
+	p.CoreProps
+}
+
+templ Title(props TitleProps) {
+	<h2
+		:id={ p.Id(scopeName, titleName) }
+		class={ props.Class }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</h2>
+}

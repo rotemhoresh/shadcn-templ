@@ -1,0 +1,8 @@
+package dialog
+
+import "fmt"
+
+// There is no element for dialog close, just add these attributes to your component.
+var Close = templ.Attributes{
+	"x-on:click": fmt.Sprintf("%s = false", control),
+}

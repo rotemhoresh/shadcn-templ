@@ -1,0 +1,32 @@
+package dialog
+
+import (
+	"fmt"
+	p "github.com/rotemhoresh/shadcn-templ/primitives"
+)
+
+const contentName = "content"
+
+type ContentProps struct {
+	p.CoreProps
+}
+
+templ Content(props ContentProps) {
+	<div
+		x-cloak
+		x-show={ control }
+		x-on:mousedown.outside={ fmt.Sprintf("%s = false", control) }
+		x-trap.inert.noscroll={ control }
+		x-on:keydown.esc.window={ fmt.Sprintf("%s = false", control) }
+		role="dialog"
+		:id={ p.Id(scopeName, contentName) }
+		:aria-describedby={ p.Id(scopeName, descriptionName) }
+		:aria-labelledby={ p.Id(scopeName, titleName) }
+		aria-modal="true"
+		:data-state={ getState(control) }
+		class={ props.Class }
+		{ props.Attrs... }
+	>
+		{ children... }
+	</div>
+}
