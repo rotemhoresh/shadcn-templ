@@ -6,7 +6,7 @@
 
 ### Note
 
-*The codebase is going through a change in structure, so it's currently a bit messy*
+**The codebase is going through a change in structure, so it's currently a bit messy**
 
 This is a work in proccess. 
 
@@ -64,10 +64,10 @@ templ Layout() {
 Use in `.templ` files.
 
 ```templ
-import "github.com/rotemhoresh/shadcn-templ/ui"
+import "github.com/rotemhoresh/shadcn-templ/ui/button"
 
 templ Page() {
-  @ui.Button(ui.ButtonTypeButton, ui.ButtonVariantDefault, ui.ButtonSizeDefault, "additional-classes", templ.Attributes{}) {
+  @button.Root(button.RootProps{}) {
     Click me
   }
 }
@@ -77,11 +77,23 @@ templ Page() {
 
 The components props (parameters) is structures like this:
 
-```templ
-templ Comp(componentSpecificParams, classes string, attrs templ.Attributes)
+```go
+type Props struct {
+  <COMPONENT_SPECIFIC_PROPS>
+  p.CoreProps // Class and Attrs 
+}
 ```
 
-Any **components specific parameters** at the begining, then **classes** and **attrs** for every component (see [example](#example) for the params of the `Button` component).
+For example, the `button.Root`'s props:
+
+```go
+type RootProps struct {
+	Type    Type    // default: [TypeButton]
+	Variant Variant // default: [VariantDefault]
+	Size    Size    // default: [SizeDefault]
+	p.CoreProps
+}
+```
 
 The components are written with constant referencing to the shadcn/ui source code and the underlying radix components. 
 
