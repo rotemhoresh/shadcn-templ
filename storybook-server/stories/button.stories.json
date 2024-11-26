@@ -1,1 +1,22 @@
-{"title":"button","parameters":{"server":{"id":"button"}},"args":{},"argTypes":{},"stories":[{"name":"Default","Args":{}}]}
+{
+  "title": "button",
+  "parameters": {
+    "server": {
+      "id": "button"
+    }
+  },
+  "args": {
+    "content": "val"
+  },
+  "argTypes": {
+    "content": {
+      "control": "con"
+    }
+  },
+  "stories": [
+    {
+      "name": "Default",
+      "Args": {}
+    }
+  ]
+}
